@@ -1,40 +1,68 @@
 # Infinity Core
 
-## Running test
+## Getting Started
 
-1. Install dependencies with `forge install` and `yarn`
-2. Run test with `forge test --isolate`
+### Prerequisites
+- Foundry (forge)
+- Node.js and Yarn
 
-See https://github.com/pancakeswap/infinity-core/pull/35 on why `--isolate` flag is used.
+### Installation
 
-## Update dependencies
+Install project dependencies:
 
-1. Run `forge update`
+```bash
+forge install
+yarn install
+```
+
+### Running Tests
+
+Execute the test suite with isolation to ensure test independence:
+
+```bash
+forge test --isolate
+```
+
+> **Note:** The `--isolate` flag is used to prevent test cross-contamination. See [PancakeSwap Infinity Core PR #35](https://github.com/pancakeswap/infinity-core/pull/35) for details.
+
+## Dependency Management
+
+Update all project dependencies:
+
+```bash
+forge update
+```
 
 ## Deployment
 
-The scripts are located in `/script` folder, deployed contract address can be found in `script/config`
+### Configuration
 
-### Pre-req: before deployment, the follow env variable needs to be set
+Deployment scripts are located in the `/script` directory. Contract addresses are stored in `script/config`.
+
+### Environment Variables
+
+Before deploying, configure the following environment variables:
+
 ```bash
-// set script config: /script/config/{SCRIPT_CONFIG}.json
+# Script configuration file
 export SCRIPT_CONFIG=ethereum-sepolia
 
-// set rpc url
-export RPC_URL=https://
+# RPC endpoint
+export RPC_URL=https://your-rpc-url
 
-// private key need to be prefixed with 0x
-export PRIVATE_KEY=0x
+# Private key (must be prefixed with 0x)
+export PRIVATE_KEY=0x...
 
-// optional. Only set if you want to verify contract on explorer
-export ETHERSCAN_API_KEY=xx
+# Optional: Etherscan API key for contract verification
+export ETHERSCAN_API_KEY=...
 ```
 
-### Execute
+### Deployment Execution
 
-Refer to the script source code for the exact command
+Refer to the deployment script for the specific command. 
 
-Example. within `script/01_DeployVault.s.sol`
+**Example:** Deploying the Vault contract using `script/01_DeployVault.s.sol`
+
 ```bash
 forge script script/01_DeployVault.s.sol:DeployVaultScript -vvv \
     --rpc-url $RPC_URL \
@@ -42,11 +70,14 @@ forge script script/01_DeployVault.s.sol:DeployVaultScript -vvv \
     --slow
 ```
 
-### Verifying
-Each script includes a verification command. Verification needs to be performed separately since the contract is deployed using the create3 method.
+### Contract Verification
 
+Contracts deployed with the CREATE3 method require separate verification.
 
-Example. within `script/01_DeployVault.s.sol`
+**Example:** Verifying the Vault contract
+
 ```bash
 forge verify-contract <address> Vault --watch --chain <chain_id>
 ```
+
+See individual deployment scripts for specific verification commands.
